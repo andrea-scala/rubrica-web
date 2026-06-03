@@ -14,6 +14,24 @@ def get_db_config():
 
 @app.route('/')
 def index():
+    config = session.get('db_config', {
+        'DB_HOST'    : os.getenv('DB_HOST'),
+        'DB_PORT'    : os.getenv('DB_PORT'),
+        'DB_NAME'    : os.getenv('DB_NAME'),
+        'DB_USER'    : os.getenv('DB_USER'),
+        'DB_PASSWORD': os.getenv('DB_PASSWORD'),
+    })
+    return render_template('index.html', config=config)
+
+@app.route('/procedi', methods=['POST'])
+def procedi():
+    session['db_config'] = {
+        'DB_HOST'    : request.form.get('DB_HOST'),
+        'DB_PORT'    : request.form.get('DB_PORT'),
+        'DB_NAME'    : request.form.get('DB_NAME'),
+        'DB_USER'    : request.form.get('DB_USER'),
+        'DB_PASSWORD': request.form.get('DB_PASSWORD'),
+    }
     return redirect(url_for('lista'))
 
 @app.route('/lista')
@@ -31,12 +49,12 @@ def editor():
 def salva():
     id = request.form.get('id')
     persona = Persona(
-        id       = int(id) if id else None,
-        nome     = request.form.get('nome'),
-        cognome  = request.form.get('cognome'),
-        indirizzo= request.form.get('indirizzo'),
-        telefono = request.form.get('telefono'),
-        eta      = int(request.form.get('eta') or 0)
+        id        = int(id) if id else None,
+        nome      = request.form.get('nome'),
+        cognome   = request.form.get('cognome'),
+        indirizzo = request.form.get('indirizzo'),
+        telefono  = request.form.get('telefono'),
+        eta       = int(request.form.get('eta') or 0)
     )
     if persona.id:
         rubrica.update(persona, get_db_config())

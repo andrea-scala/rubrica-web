@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Connessione al Database</h4>
+            </div>
+            <div class="card-body">
+                <form action="/procedi" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Host</label>
+                        <input type="text" name="DB_HOST" class="form-control" value="{{ config.DB_HOST }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Porta</label>
+                        <input type="number" name="DB_PORT" class="form-control" value="{{ config.DB_PORT }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nome Database</label>
+                        <input type="text" name="DB_NAME" class="form-control" value="{{ config.DB_NAME }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" name="DB_USER" class="form-control" value="{{ config.DB_USER }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="DB_PASSWORD" class="form-control" value="{{ config.DB_PASSWORD }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">PROCEDI</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
